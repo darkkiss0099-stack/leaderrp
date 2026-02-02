@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHANGRETTA MEMBER | OFFICIAL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --bg-body: #0a0a0a;
+            --bg-card: rgba(30, 41, 59, 0.7);
+            --accent-founder: #f59e0b;
+            --accent-member: #94a3b8;
+            --text-main: #f8fafc;
+            --status-online: #22c55e;
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Kanit', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            overflow-x: hidden;
+        }
+
+        .bg-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)),
+                        url('https://img2.pic.in.th/475638765_916266083879572_6694404597216444166_n.jpg');
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1100px;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #fff, #888, #fff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: shimmer 3s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% center; }
+            100% { background-position: -200% center; }
+        }
+
+        .search-container {
+            margin-bottom: 50px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 15px 25px;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            font-size: 1.1rem;
+            backdrop-filter: blur(10px);
+            outline: none;
+            transition: 0.3s;
+            text-align: center;
+        }
+
+        #searchInput:focus { border-color: #3b82f6; background: rgba(255, 255, 255, 0.1); }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            padding-left: 15px;
+            border-left: 4px solid #3b82f6;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #3b82f6;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+
+        @media (max-width: 992px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 650px) { .grid { grid-template-columns: 1fr; } }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: 15px;
+            padding: 18px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: 0.3s;
+            border: 1px solid var(--border);
+            text-decoration: none;
+            color: inherit;
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #fff;
+        }
+
+        .avatar-wrapper { position: relative; flex-shrink: 0; }
+        .avatar {
+            width: 60px; height: 60px;
+            border-radius: 50%; overflow: hidden;
+            display: flex; justify-content: center; align-items: center;
+            background: #000;
+        }
+        .avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+        .status-dot {
+            position: absolute; bottom: 2px; right: 2px;
+            width: 14px; height: 14px; border-radius: 50%;
+            border: 2px solid #1e293b;
+        }
+        .online { background: var(--status-online); box-shadow: 0 0 8px var(--status-online); }
+
+        .info { flex-grow: 1; overflow: hidden; }
+        .info h3 { font-size: 1.05rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 4px; }
+        
+        .badge {
+            font-size: 0.7rem; padding: 2px 10px; border-radius: 4px;
+            font-weight: bold; text-transform: uppercase;
+        }
+        .bg-founder { background: var(--accent-founder); color: #000; }
+        .bg-member { background: var(--accent-member); color: #000; }
+
+        .fb-logo { width: 22px; height: 22px; opacity: 0.3; transition: 0.3s; margin-left: auto; }
+        .card:hover .fb-logo { opacity: 1; transform: scale(1.1); }
+
+        #music-container { position: fixed; bottom: 30px; right: 30px; z-index: 100; }
+        .player-bar { 
+            display: flex; align-items: center; background: rgba(0, 0, 0, 0.9); 
+            border: 1px solid var(--border); padding: 10px 15px; gap: 12px; 
+            backdrop-filter: blur(10px); border-radius: 4px;
+        }
+        .album-art { width: 40px; height: 40px; border: 1px solid #444; }
+        .song-info h4 { font-size: 0.75rem; color: #fff; }
+        .song-info p { font-size: 0.6rem; color: #888; }
+        .btn-toggle { 
+            background: #fff; color: #000; border: none; width: 28px; height: 28px; 
+            font-weight: bold; cursor: pointer; border-radius: 2px;
+        }
+
+        .footer { margin-top: 50px; font-size: 0.8rem; color: #666; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <div class="bg-overlay"></div>
+
+    <div class="container">
+        <header>
+            <h1>CHANGRETTA</h1>
+            <p style="letter-spacing: 5px; color: #888;">MEMBER DIRECTORY 2026</p>
+        </header>
+
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="SEARCH MEMBER NAME...">
+        </div>
+
+        <div class="group-section">
+            <h2 class="section-title">ALL LEADER RP</h2>
+            <div class="grid">
+                <a href="https://www.facebook.com/captain.changretta" target="_blank" class="card" data-name="Captainn Changretta">
+                    <div class="avatar-wrapper">
+                        <div class="avatar" style="border: 2px solid var(--accent-founder);"><img src="https://img5.pic.in.th/file/secure-sv1/cgtlogo4.png"></div>
+                        <div class="status-dot online"></div>
+                    </div>
+                    <div class="info">
+                        <h3>Captainn Changretta</h3>
+                        <span class="badge bg-founder">Owner</span>
+                    </div>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" class="fb-logo">
+                </a>
+
+                <a href="https://www.facebook.com/mikey.changretta" target="_blank" class="card" data-name="Mikey Changretta">
+                    <div class="avatar-wrapper">
+                        <div class="avatar" style="border: 2px solid var(--accent-founder);"><img src="https://img5.pic.in.th/file/secure-sv1/cgtlogo4.png"></div>
+                        <div class="status-dot online"></div>
+                    </div>
+                    <div class="info">
+                        <h3>Mikey Changretta</h3>
+                        <span class="badge bg-founder">Owner</span>
+                    </div>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" class="fb-logo">
+                </a>
+
+                <a href="https://www.facebook.com/NitroRairak" target="_blank" class="card" data-name="Nitro Changretta">
+                    <div class="avatar-wrapper">
+                        <div class="avatar" style="border: 2px solid var(--accent-founder);"><img src="https://img5.pic.in.th/file/secure-sv1/cgtlogo4.png"></div>
+                        <div class="status-dot online"></div>
+                    </div>
+                    <div class="info">
+                        <h3>Nitro Changretta</h3>
+                        <span class="badge bg-founder">Owner</span>
+                    </div>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" class="fb-logo">
+                </a>
+
+                <a href="https://www.facebook.com/flint.changretta" target="_blank" class="card" data-name="Flint Changretta">
+                    <div class="avatar-wrapper">
+                        <div class="avatar" style="border: 2px solid var(--accent-founder);"><img src="https://img5.pic.in.th/file/secure-sv1/cgtlogo4.png"></div>
+                        <div class="status-dot online"></div>
+                    </div>
+                    <div class="info">
+                        <h3>Flint Changretta</h3>
+                        <span class="badge bg-founder">Owner</span>
+                    </div>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" class="fb-logo">
+                </a>
+
+                <a href="https://www.facebook.com/oshi.changretta" target="_blank" class="card" data-name="Oshi Changretta">
+                    <div class="avatar-wrapper">
+                        <div class="avatar" style="border: 2px solid var(--accent-member);"><img src="https://img5.pic.in.th/file/secure-sv1/cgtlogo4.png"></div>
+                        <div class="status-dot online"></div>
+                    </div>
+                    <div class="info">
+                        <h3>Oshi Changretta</h3>
+                        <span class="badge bg-member">MEMBER</span>
+                    </div>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" class="fb-logo">
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="music-container">
+        <div class="player-bar">
+            <img src="https://i.ytimg.com/vi/xy3AcmW0lrQ/maxresdefault.jpg" class="album-art">
+            <div class="song-info">
+                <h4>End of Beginning</h4>
+                <p>Djo // AUDIO_SYSTEM</p>
+            </div>
+            <button class="btn-toggle" onclick="togglePlayPause()" id="playBtn">||</button>
+        </div>
+    </div>
+
+    <div id="yt-player" style="display:none;"></div>
+
+    <footer class="footer">
+        © 2026 CHANGRETTA OFFICIAL | Designed by Oneless
+    </footer>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const cards = document.querySelectorAll('.card');
+
+        searchInput.addEventListener('input', (e) => {
+            const val = e.target.value.toLowerCase();
+            cards.forEach(card => {
+                const name = card.getAttribute('data-name').toLowerCase();
+                card.style.display = name.includes(val) ? "flex" : "none";
+            });
+        });
+
+        // YouTube Player
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('yt-player', {
+                height: '0', width: '0',
+                videoId: 'xy3AcmW0lrQ',
+                playerVars: { 'autoplay': 1, 'loop': 1, 'playlist': 'xy3AcmW0lrQ' },
+                events: { 'onReady': (e) => { e.target.setVolume(30); }}
+            });
+        }
+
+        function togglePlayPause() {
+            const btn = document.getElementById('playBtn');
+            if (player && player.getPlayerState() === 1) {
+                player.pauseVideo();
+                btn.innerText = "▶";
+            } else if (player) {
+                player.playVideo();
+                btn.innerText = "||";
+            }
+        }
+
+        document.body.addEventListener('click', () => { 
+            if(player && player.playVideo) player.playVideo(); 
+        }, { once: true });
+    </script>
+</body>
+</html>
